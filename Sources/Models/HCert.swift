@@ -270,6 +270,14 @@ public struct HCert {
     let last = get(.lastName).string ?? ""
     return "\(first) \(last)"
   }
+  
+  public var firstName: String {
+    return get(.firstName).string ?? ""
+  }
+  
+  public var lastName: String {
+    return get(.lastName).string ?? ""
+  }
 
   public var dateOfBirth: Date? {
     guard let dateString = get(.dateOfBirth).string else {
