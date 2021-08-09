@@ -22,7 +22,14 @@ final class DateTests: XCTestCase {
         
         XCTAssert(date != nil)
     }
-    
+
+    func testOffSetTime1(){
+        let d = "2021-07-14T15:10:00+02"
+        let date = Date(rfc3339DateTimeString: d)
+      
+        XCTAssert(date != nil)
+    }
+
     func testDateTime(){
         let d = "2021-05-18T08:10:00"
         let date = Date(dateString: d)
