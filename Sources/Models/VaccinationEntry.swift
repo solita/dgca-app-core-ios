@@ -28,13 +28,13 @@
 import Foundation
 import SwiftyJSON
 
-struct VaccinationEntry: HCertEntry {
-  var typeAddon: String {
+public struct VaccinationEntry: HCertEntry {
+    public var typeAddon: String {
     let format = l10n("vaccine.x-of-x")
     return .localizedStringWithFormat(format, doseNumber, dosesTotal)
   }
 
-  var info: [InfoSection] {
+    public var info: [InfoSection] {
     [
       InfoSection(
         header: l10n("vaccine.date"),
@@ -72,7 +72,7 @@ struct VaccinationEntry: HCertEntry {
     ]
   }
   
-  var walletInfo: [InfoSection] {
+    public var walletInfo: [InfoSection] {
     [
       InfoSection(
         header: l10n("vaccine.date"),
@@ -111,7 +111,7 @@ struct VaccinationEntry: HCertEntry {
   }
 
   
-  var validityFailures: [String] {
+    public var validityFailures: [String] {
     var fail = [String]()
     if date > HCert.clock {
       fail.append(l10n("hcert.err.vac.future"))
@@ -160,14 +160,14 @@ struct VaccinationEntry: HCertEntry {
     self.date = date
   }
 
-  var diseaseTargeted: String
-  var vaccineOrProphylaxis: String
-  var medicalProduct: String
-  var manufacturer: String
-  var countryCode: String
-  var issuer: String
-  var uvci: String
-  var doseNumber: Int
-  var dosesTotal: Int
-  var date: Date
+    public var diseaseTargeted: String
+    public var vaccineOrProphylaxis: String
+    public var medicalProduct: String
+    public var manufacturer: String
+    public var countryCode: String
+    public var issuer: String
+    public var uvci: String
+    public var doseNumber: Int
+    public var dosesTotal: Int
+    public var date: Date
 }
