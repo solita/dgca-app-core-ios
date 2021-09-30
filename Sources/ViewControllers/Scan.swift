@@ -141,7 +141,7 @@ open class ScanVC: UIViewController {
     captureSession?.stopRunning()
   }
 
-  public override func viewDidAppear(_ animated: Bool) {
+    open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     captureSession?.startRunning()
   }
