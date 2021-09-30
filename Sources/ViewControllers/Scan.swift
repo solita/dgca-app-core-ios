@@ -136,7 +136,7 @@ open class ScanVC: UIViewController {
     SquareViewFinder.create(from: self)
   }
 
-  public override func viewWillDisappear(_ animated: Bool) {
+  open override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
     captureSession?.stopRunning()
   }
