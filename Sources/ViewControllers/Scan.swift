@@ -34,8 +34,16 @@ import SwiftCBOR
 
 public protocol ScanVCDelegate: AnyObject {
   func hCertScanned(_:HCert)
+  func scanningFailed(_:String)
   func disableBackgroundDetection()
   func enableBackgroundDetection()
+}
+
+public struct ScanFailureReasons {
+    static let BARCODE_NOT_FOUND = "Barcode not found"
+    static let UNABLE_TO_CONSTRUCT_HCERT = "Barcode not found"
+    static let POTENTIAL_QR_CODE_NOT_FOUND = "Barcode not found"
+    static let CAPTURE_SESSION_NOT_RUNNING = "Barcode not found"
 }
 
 open class ScanVC: UIViewController {
@@ -217,9 +225,12 @@ extension ScanVC {
 
     configurePreviewLayer()
   }
-
+    
   func processClassification(_ request: VNRequest) {
-    guard let barcodes = request.results else { return }
+    guard let barcodes = request.results else {
+        delegate?.scanningFailed(ScanFailureReasons.BARCODE_NOT_FOUND)
+        return
+    }
     DispatchQueue.main.async { [self] in
       if captureSession?.isRunning == true {
         camView.layer.sublayers?.removeSubrange(1...)
@@ -229,11 +240,16 @@ extension ScanVC {
             let potentialQRCode = barcode as? VNBarcodeObservation,
             [.Aztec, .QR, .DataMatrix].contains(potentialQRCode.symbology),
             potentialQRCode.confidence > 0.9
-          else { return }
+          else {
+            delegate?.scanningFailed(ScanFailureReasons.POTENTIAL_QR_CODE_NOT_FOUND)
+            return
+          }
 
           print(potentialQRCode.symbology)
           observationHandler(payloadS: potentialQRCode.payloadStringValue)
         }
+      } else {
+        delegate?.scanningFailed(ScanFailureReasons.CAPTURE_SESSION_NOT_RUNNING)
       }
     }
   }
@@ -242,6 +258,8 @@ extension ScanVC {
     if var hCert = HCert(from: payloadS ?? "", applicationType: applicationType) {
       hCert.ruleCountryCode = getSelectedCountryCode()
       delegate?.hCertScanned(hCert)
+    } else {
+        delegate?.scanningFailed(ScanFailureReasons.UNABLE_TO_CONSTRUCT_HCERT)
     }
   }
 
