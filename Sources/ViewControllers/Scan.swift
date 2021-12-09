@@ -40,10 +40,11 @@ public protocol ScanVCDelegate: AnyObject {
 }
 
 public struct ScanFailureReasons {
-    static let BARCODE_NOT_FOUND = "Barcode not found"
-    static let UNABLE_TO_CONSTRUCT_HCERT = "Barcode not found"
-    static let POTENTIAL_QR_CODE_NOT_FOUND = "Barcode not found"
-    static let CAPTURE_SESSION_NOT_RUNNING = "Barcode not found"
+    static let BARCODE_NOT_FOUND = "Barcode not found."
+    static let UNABLE_TO_CONSTRUCT_HCERT = "Unable to construct hcert."
+    static let POTENTIAL_QR_CODE_NOT_FOUND = "Potential QR code not found."
+    static let CAPTURE_SESSION_NOT_RUNNING = "Capture session not running."
+    static let KEY_NOT_FOUND = "Key not found."
 }
 
 open class ScanVC: UIViewController {

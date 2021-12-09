@@ -201,6 +201,12 @@ public struct HCert {
       errors?.errors.append(.version)
       return nil
     }
+    
+    let keys = Self.publicKeyStorageDelegate?.getEncodedPublicKeys(for: kidStr)
+    if let k = keys, k.isEmpty {
+        validityFailures.append(ScanFailureReasons.KEY_NOT_FOUND)
+    }
+    
     findValidity()
     makeSections(for: appType)
     
