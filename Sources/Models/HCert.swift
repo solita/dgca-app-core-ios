@@ -202,11 +202,6 @@ public struct HCert {
       return nil
     }
     
-    let keys = Self.publicKeyStorageDelegate?.getEncodedPublicKeys(for: kidStr)
-    if let k = keys, k.isEmpty {
-        validityFailures.append(ScanFailureReasons.KEY_NOT_FOUND)
-    }
-    
     findValidity()
     makeSections(for: appType)
     
@@ -219,6 +214,10 @@ public struct HCert {
   
   mutating func findValidity() {
     validityFailures = []
+    let keys = Self.publicKeyStorageDelegate?.getEncodedPublicKeys(for: kidStr)
+    if let k = keys, k.isEmpty {
+        validityFailures.append(ScanFailureReasons.KEY_NOT_FOUND)
+    }
     if !cryptographicallyValid {
       validityFailures.append(l10n("hcert.err.crypto"))
     }
