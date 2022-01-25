@@ -255,7 +255,7 @@ extension ScanVC {
     }
   }
 
-  func observationHandler(payloadS: String?) {
+  public func observationHandler(payloadS: String?) {
     if var hCert = HCert(from: payloadS ?? "", applicationType: applicationType) {
       hCert.ruleCountryCode = getSelectedCountryCode()
       delegate?.hCertScanned(hCert)
